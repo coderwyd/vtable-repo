@@ -19,6 +19,8 @@
       </a-radio-group>
     </div>
 
+    <button @click="handleAdd">add</button>
+
     <VTable
       v-model:default-pagination="pagination"
       :data="tableData"
@@ -52,7 +54,7 @@ const pagination = ref<VTablePaginationState>({
   pageSize: 10,
 });
 
-const id = 1;
+let id = 1;
 const tableData = ref<any[]>([
   {
     id,
@@ -77,4 +79,17 @@ const columns: VTableColumn[] = [
   { columnKey: "department", columnHeader: "部门", columnWidth: 120 },
   { columnKey: "position", columnHeader: "职位" },
 ];
+
+function handleAdd() {
+  id++;
+  tableData.value.push({
+    id,
+    name: `员工${id}`,
+    age: 20 + (id % 30),
+    email: `user${id}@example.com`,
+    department: ["技术部", "产品部", "运营部", "市场部"][id % 4],
+    position: ["工程师", "经理", "专员", "主管"][id % 4],
+  });
+  totalCount.value++;
+}
 </script>
